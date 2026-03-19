@@ -1,1 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Luzuu ❤️</title>
 
+<style>
+body {
+  margin:0;
+  font-family: Arial;
+  background:black;
+  color:white;
+  overflow:hidden;
+}
+
+/* Stars */
+.star {
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:white;
+  animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle {
+  from {opacity:0.2;}
+  to {opacity:1;}
+}
+
+/* Center text */
+#mainText {
+  text-align:center;
+  margin-top:15%;
+  font-size:28px;
+  color:pink;
+  opacity:0;
+  transition:1s;
+}
+
+/* Chat box */
+.chatbox {
+  max-width:350px;
+  margin:auto;
+  margin-top:20px;
+  background:#111;
+  padding:10px;
+  border-radius:15px;
+  display:none;
+}
+
+.msg {
+  padding:10px;
+  margin:8px;
+  border-radius:15px;
+  max-width:70%;
+}
+
+.left {background:#333;}
+.right {background:#ff4d6d; margin-left:auto;}
+
+img {
+  width:100%;
+  border-radius:10px;
+  margin-top:5px;
+}
+
+/* Final message */
+#final {
+  text-align:center;
+  display:none;
+  margin-top:20%;
+  font-size:30px;
+  color:pink;
+}
+</style>
+</head>
+
+<body>
+
+<div id="mainText"></div>
+
+<div class="chatbox" id="chat"></div>
+
+<div id="final">
+  Happy Birthday My Luzuu 🎂💖 <br><br>
+  You are my forever, my happiness, my everything ❤️ <br>
+  I love you endlessly 💕
+</div>
+
+<audio id="music" src="yourmusic.mp3"></audio>
+
+<script>
+
+// Stars
+for(let i=0;i<150;i++){
+  let s=document.createElement("div");
+  s.className="star";
+  s.style.top=Math.random()*100+"vh";
+  s.style.left=Math.random()*100+"vw";
+  document.body.appendChild(s);
+}
+
+// Typing intro
+let text="Hey my Luzuu ❤️";
+let i=0;
+
+function typeIntro(){
+  let box=document.getElementById("mainText");
+  box.style.opacity=1;
+
+  if(i<text.length){
+    box.innerHTML+=text[i];
+    i++;
+    setTimeout(typeIntro,80);
+  } else {
+    setTimeout(startChat,1500);
+  }
+}
+
+// Chat story
+let chats=[
+  {text:"Do you remember how we started? 🥺",side:"left"},
+  {text:"From strangers...",side:"right"},
+  {text:"To something so beautiful 💖",side:"left"},
+  {text:"Every moment with you feels special ✨",side:"right"},
+  {text:"This memory 🥰",img:"photo1.jpg",side:"left"},
+  {text:"And this one 😍",img:"photo2.jpg",side:"right"},
+  {text:"I fall for you more every day ❤️",side:"left"},
+  {text:"Today is your day 🎂",side:"right"}
+];
+
+let index=0;
+
+function startChat(){
+  document.getElementById("mainText").style.display="none";
+  let box=document.getElementById("chat");
+  box.style.display="block";
+
+  let interval=setInterval(()=>{
+    if(index<chats.length){
+      let div=document.createElement("div");
+      div.className="msg "+chats[index].side;
+      div.innerHTML=chats[index].text;
+
+      if(chats[index].img){
+        let img=document.createElement("img");
+        img.src=chats[index].img;
+        div.appendChild(img);
+      }
+
+      box.appendChild(div);
+      box.scrollTop=box.scrollHeight;
+      index++;
+    } else {
+      clearInterval(interval);
+      setTimeout(showFinal,2000);
+    }
+  },1200);
+}
+
+// Final message
+function showFinal(){
+  document.getElementById("chat").style.display="none";
+  document.getElementById("final").style.display="block";
+}
+
+// Auto music (works after first tap)
+document.body.addEventListener("click",()=>{
+  document.getElementById("music").play();
+});
+
+// Start automatically
+typeIntro();
+
+</script>
+
+</body>
+</html>
